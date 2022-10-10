@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 project(C_Demo VERSION 5.0 LANGUAGES C)
-set(WINDOWS FALSE)
 
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "g++")
@@ -32,7 +31,7 @@ set(OPTION_SERVER_XL_MAC {0xdc,0xa6,0x32,0x7e,0x66,0xdc} CACHE STRING "")
 set(OPTION_SERVER_XL_NET "NET1" CACHE STRING "")
 set(OPTION_SERVER_XL_SEG "SEG1" CACHE STRING "")
 
-if (WINDOWS)
+if (WIN32)
 add_executable(C_Demo ${C_Demo_WIN_SOURCES})
 set(OPTION_USE_XLAPI_V3 ON)
 else ()
@@ -49,7 +48,8 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 
-if (WINDOWS)
+if (WIN32)
+target_link_libraries(${PROJECT_NAME} PRIVATE wsock32 ws2_32 Iphlpapi)
 else ()
 #set_target_properties(C_Demo PROPERTIES OUTPUT_NAME "C_Demo.out")
 set_target_properties(C_Demo PROPERTIES SUFFIX ".out")

@@ -58,7 +58,7 @@ uint8_t* loadFile(const char* filename, uint32_t* length) {
     fileLen = (uint32_t)GetFileSize(hFile, NULL);
     fileBuf = (uint8_t*)malloc(fileLen+1);
     if (fileBuf == NULL) {
-        DBG_PRINTF_ERROR("Error: out of memory!\n");
+        DBG_PRINTF_ERROR("Error: out of memory for length %d!\n", fileLen+1);
         CloseHandle(hFile);
         return NULL;
     }

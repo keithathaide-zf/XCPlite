@@ -21,16 +21,19 @@ configure_file(main_cfg.h.in ${PROJECT_SOURCE_DIR}/main_cfg.h)
 add_executable(CPP_Demo ${CPP_Demo_SOURCES})
 target_include_directories(CPP_Demo PUBLIC "${PROJECT_SOURCE_DIR}" )
 target_include_directories(CPP_Demo PUBLIC "${PROJECT_SOURCE_DIR}/../src" )
-#set_target_properties(CPP_Demo PROPERTIES OUTPUT_NAME "CPP_Demo.out")
-set_target_properties(CPP_Demo PROPERTIES SUFFIX ".out")
 
 # compile*.c as C++
 # add_compile_options("/TP")
 file(GLOB_RECURSE CFILES "${CMAKE_SOURCE_DIR}/../*.c")
 set_source_files_properties(${CFILES} PROPERTIES LANGUAGE CXX)
 
-
+if (WIN32)
+target_link_libraries(${PROJECT_NAME} PRIVATE wsock32 ws2_32 Iphlpapi)
+else()
+#set_target_properties(CPP_Demo PROPERTIES OUTPUT_NAME "CPP_Demo.out")
+set_target_properties(CPP_Demo PROPERTIES SUFFIX ".out")
 target_link_libraries(CPP_Demo PRIVATE m)
+endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)

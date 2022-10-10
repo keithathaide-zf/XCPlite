@@ -172,7 +172,7 @@ uint8_t* ApplXcpGetPointer(uint8_t addr_ext, uint32_t addr) {
     if (addr_ext != 0) return NULL;
     uint8_t* p;
 
-#ifdef _WIN32 // on WIN32 check that XCP address is in range, because addr is relativ to baseaddr
+#if defined(_WIN32) && !defined(__MINGW32__) // on WIN32 check that XCP address is in range, because addr is relativ to baseaddr
     assert((uint64_t)ApplXcpGetBaseAddr() + addr <= 0xffffffff); 
 #endif
 
